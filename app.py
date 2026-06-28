@@ -16,12 +16,13 @@ load_css()
 # Initialize session state variables
 
 DEFAULTS = {
-    "messages" : [],
-    "uploaded_file": None,
-    "dataset_name": None,
+    "messages": [],
+    "dataset": None,
     "dataset_loaded": False,
-    "tables" : [],
-    "status" : "waiting for upload",
+    "dataset_name": None,
+    "database_path": None,
+    "tables": [],
+    "status": "Waiting for upload",
 }
 
 

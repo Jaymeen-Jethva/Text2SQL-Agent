@@ -1,5 +1,8 @@
 import streamlit as st
 
+from service.pipeline import run_pipeline
+from utils.sql_utils import list_tables
+
 
 def render_sidebar():
 
@@ -9,35 +12,40 @@ def render_sidebar():
 
         uploaded_file = st.file_uploader(
             "Upload Dataset",
-            type=["csv","xlsx","xls"]
+            type=["csv", "xlsx", "xls"],
         )
+
+        # ---------------------------------
+        # Process uploaded file
+        # ---------------------------------
 
         if uploaded_file is not None:
 
-            from service.upload_service import save_uploaded_file
-            from service.dataframe_service import load_dataset
+            # Prevent processing the same file repeatedly
+            if (
+                not st.session_state.dataset_loaded
+                or st.session_state.dataset_name != uploaded_file.name
+            ):
 
-            local_path = save_uploaded_file(uploaded_file)
+                with st.spinner("Processing dataset..."):
 
-            dataset = load_dataset(local_path)
+                    result = run_pipeline(uploaded_file)
 
-            st.session_state.dataset_loaded = True
+                st.session_state.dataset = result["dataset"]
+                st.session_state.database_path = result["db_path"]
+                st.session_state.tables = result["tables"]
+                st.session_state.dataset_name = result["dataset_name"]
+                st.session_state.dataset_loaded = True
+                st.session_state.status = "SQLite Ready"
 
-            st.session_state.dataset_name = uploaded_file.name
+        # ---------------------------------
+        # Dataset Preview
+        # ---------------------------------
 
-            st.session_state.tables = list(
-                dataset["tables"].keys()
-            )
-
-            st.session_state.dataset = dataset
-
-            st.session_state.status = "Dataset Loaded"
-
-        
-        
         if st.session_state.dataset_loaded:
 
             st.divider()
+
             st.subheader("Preview")
 
             first_table = next(
@@ -52,15 +60,43 @@ def render_sidebar():
                 height=220,
             )
 
+        # ---------------------------------
+        # SQLite Tables
+        # ---------------------------------
+
+        if (
+            st.session_state.dataset_loaded
+            and "database_path" in st.session_state
+        ):
+
+            sqlite_tables = list_tables(
+                st.session_state.database_path
+            )
+
+            st.divider()
+
+            st.subheader("SQLite Tables")
+
+            for table in sqlite_tables:
+                st.success(table)
+
+        # ---------------------------------
+        # Semantic Layer
+        # ---------------------------------
+
         st.divider()
 
         st.subheader("Semantic Layer")
 
         st.button(
-            "Generate",
+            "Generate Semantic Layer",
             use_container_width=True,
             type="primary",
         )
+
+        # ---------------------------------
+        # Status
+        # ---------------------------------
 
         st.divider()
 
@@ -68,9 +104,13 @@ def render_sidebar():
 
         st.info(st.session_state.status)
 
+        # ---------------------------------
+        # Dataset Tables
+        # ---------------------------------
+
         st.divider()
 
-        st.subheader("Tables")
+        st.subheader("Loaded Tables")
 
         if len(st.session_state.tables) == 0:
 
