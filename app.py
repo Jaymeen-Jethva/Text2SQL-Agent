@@ -22,6 +22,8 @@ DEFAULTS = {
     "dataset_name": None,
     "database_path": None,
     "tables": [],
+    "ddl": {},
+    "profiles": [],
     "status": "Waiting for upload",
 }
 

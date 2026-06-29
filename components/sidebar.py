@@ -31,12 +31,16 @@ def render_sidebar():
 
                     result = run_pipeline(uploaded_file)
 
-                st.session_state.dataset = result["dataset"]
-                st.session_state.database_path = result["db_path"]
-                st.session_state.tables = result["tables"]
-                st.session_state.dataset_name = result["dataset_name"]
-                st.session_state.dataset_loaded = True
-                st.session_state.status = "SQLite Ready"
+                    st.session_state.dataset = result["dataset"]
+                    st.session_state.database_path = result["db_path"]
+                    st.session_state.tables = result["tables"]
+                    st.session_state.dataset_name = result["dataset_name"]
+
+                    st.session_state.ddl = result["ddl"]
+                    st.session_state.profiles = result["profiles"]
+
+                    st.session_state.dataset_loaded = True
+                    st.session_state.status = "Database Profiled ✅"
 
         # ---------------------------------
         # Dataset Preview
