@@ -1,6 +1,6 @@
 import streamlit as st
 
-from service.pipeline import run_pipeline
+from pipeline.ingestion_pipeline import run_pipeline
 from utils.sql_utils import list_tables
 
 
