@@ -10,7 +10,14 @@ DATABASE_DIR = BASE_DIR / "database"
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 DATABASE_DIR.mkdir(parents=True, exist_ok=True)
 
-# LLM Config
+# LLM Provider Config
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama").lower()
+
+# Hugging Face Config (If Provider == huggingface)
+HF_TOKEN = os.getenv("HF_TOKEN", "")
+HF_MODEL_ID = os.getenv("HF_MODEL_ID", "Qwen/Qwen2.5-72B-Instruct")
+
+# Ollama Config (If Provider == ollama)
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 DEFAULT_MODEL = os.getenv("DEFAULT_MODEL", "qwen2.5:7b")
 

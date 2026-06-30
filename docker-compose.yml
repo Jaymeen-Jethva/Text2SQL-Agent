@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: text2sql_ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: always
+
+  # This service ensures the qwen2.5 model is pulled automatically
+  ollama-pull:
+    image: ollama/ollama:latest
+    container_name: text2sql_ollama_pull
+    depends_on:
+      - ollama
+    entrypoint: >
+      /bin/sh -c "
+      echo 'Waiting for Ollama service to start...' &&
+      sleep 5 &&
+      echo 'Pulling qwen2.5:7b...' &&
+      OLLAMA_HOST=ollama:11434 ollama pull qwen2.5:7b &&
+      echo 'Model ready!'
+      "
+
+  text2sql-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.ci
+    container_name: text2sql_app
+    ports:
+      - "8501:8501"
+    environment:
+      # Connect to the local docker ollama service
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - DEFAULT_MODEL=qwen2.5:7b
+      - EMBEDDING_MODEL=BAAI/bge-m3
+    volumes:
+      # Mount persistent folders so uploads and database survive restarts
+      - ./uploads:/app/uploads
+      - ./database:/app/database
+      - ./logs:/app/logs
+    depends_on:
+      - ollama
+    restart: always
+
+volumes:
+  ollama_data:

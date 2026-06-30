@@ -33,6 +33,27 @@ Since this application uses a local LLM to generate SQL securely, you need to in
 ### 3. Embedding Model
 The embedding model (`BAAI/bge-m3`) does **not** need to be downloaded manually! The `sentence-transformers` Python package will automatically download it the very first time you run the app and upload a dataset.
 
+---
+
+## Docker Installation (Recommended)
+If you have Docker installed, you can run the entire project (including the Streamlit UI, the Ollama server, and automatic model downloading) using a single command.
+
+1. Ensure [Docker Desktop](https://www.docker.com/products/docker-desktop/) is installed and running.
+2. Open a terminal in the root directory of this project.
+3. Run:
+   ```bash
+   docker-compose up --build
+   ```
+This will:
+- Build the Streamlit web app container.
+- Spin up an official Ollama container.
+- Use an initialization container to automatically pull the `qwen2.5:7b` model for you.
+- Map your local `uploads/` and `database/` folders so you don't lose data.
+
+Once it's ready, open your browser and go to `http://localhost:8501`.
+
+---
+
 ## Configuration
 All configuration is handled in `config.py`.
 - `OLLAMA_BASE_URL`: URL to your Ollama instance.
