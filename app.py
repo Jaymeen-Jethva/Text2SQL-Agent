@@ -40,10 +40,8 @@ if "messages" not in st.session_state:
 if "dataset_loaded" not in st.session_state:
     st.session_state.dataset_loaded = False
 
-left, right = st.columns([1, 3], gap="large")
-
-with left:
+with st.sidebar:
     render_sidebar()
 
-with right:
-    render_chat()
+# Render chat in the main area so the chat_input pins to the bottom of the screen natively
+render_chat()

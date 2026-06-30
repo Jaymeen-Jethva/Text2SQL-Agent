@@ -13,6 +13,12 @@ RUN apt-get update && apt-get install -y \
     libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
+# ----------------------------------------------------
+# Install Python requirements AS ROOT
+# ----------------------------------------------------
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
 # Copy app files with ownership
 COPY --chown=user:user . .
 
@@ -21,14 +27,11 @@ RUN mkdir -p /app/database /app/uploads /app/logs && \
     chown -R user:user /app/database /app/uploads /app/logs && \
     chmod -R 777 /app/database /app/uploads /app/logs
 
-# Switch to the non-root user
+# Switch to the non-root user (Everything after this runs safely as user 1000)
 USER user
-
-# Install Python requirements
-RUN pip install --no-cache-dir -r requirements.txt
 
 # Hugging Face Spaces exposes port 7860
 EXPOSE 7860
 
 # Run Streamlit on port 7860
-CMD ["streamlit", "run", "app.py", "--server.port=7860", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "app.py", "--server.port=7860", "--server.address=0.0.0.0", "--server.enableCORS=false", "--server.enableXsrfProtection=false"]

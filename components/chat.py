@@ -21,7 +21,7 @@ def render_chat():
                 with st.expander("Results", expanded=False):
                     st.dataframe(message["results"])
             if "chart" in message and message["chart"] is not None:
-                st.plotly_chart(message["chart"], use_container_width=True)
+                st.plotly_chart(message["chart"], width='stretch')
 
     prompt = st.chat_input("Ask anything...")
 
@@ -56,7 +56,7 @@ def render_chat():
                         st.dataframe(df_results)
                         
                 if result["chart"]:
-                    st.plotly_chart(result["chart"], use_container_width=True)
+                    st.plotly_chart(result["chart"], width='stretch')
                 
                 st.markdown("### Answer")
                 response_content = st.write_stream(result["answer_generator"])
