@@ -10,9 +10,22 @@ class ColumnProfile(BaseModel):
     primary_key: bool
     distinct_count: int
     null_count: int
-    min_value: Any | None
-    max_value: Any | None
-    sample_values: list[Any]
+    min_value: Any | None = None
+    max_value: Any | None = None
+    average_value: Any | None = None
+    median_value: Any | None = None
+    unique_values: list[Any] = []
+    sample_values: list[Any] = []
+    
+    # Detections
+    is_categorical: bool = False
+    is_boolean: bool = False
+    is_currency: bool = False
+    is_percentage: bool = False
+    is_date: bool = False
+    is_email: bool = False
+    is_phone: bool = False
+    is_identifier: bool = False
 
 
 class TableProfile(BaseModel):

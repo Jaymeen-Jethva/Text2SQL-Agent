@@ -1,0 +1,7 @@
+2026-06-30 14:55:15,958 [INFO] sentence_transformers.SentenceTransformer: Load pretrained SentenceTransformer: BAAI/bge-m3
+2026-06-30 14:55:19,423 [WARNING] huggingface_hub.file_download: Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-06-30 14:59:03,834 [WARNING] huggingface_hub.file_download: Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-06-30 14:59:04,457 [WARNING] huggingface_hub.file_download: Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-06-30 14:59:05,321 [WARNING] huggingface_hub.file_download: Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-06-30 14:59:20,152 [INFO] faiss.loader: Loading faiss with AVX2 support.
+2026-06-30 14:59:20,715 [INFO] faiss.loader: Successfully loaded faiss with AVX2 support.

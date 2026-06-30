@@ -13,7 +13,7 @@ def list_tables(db_path):
 
         FROM sqlite_master
 
-        WHERE type='table'
+        WHERE type='table' AND name NOT LIKE 'sqlite_%'
 
     """)
 

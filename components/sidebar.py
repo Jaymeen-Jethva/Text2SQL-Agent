@@ -31,13 +31,13 @@ def render_sidebar():
 
                     result = run_pipeline(uploaded_file)
 
-                    st.session_state.dataset = result["dataset"]
-                    st.session_state.database_path = result["db_path"]
-                    st.session_state.tables = result["tables"]
-                    st.session_state.dataset_name = result["dataset_name"]
+                    st.session_state.dataset = result.tables
+                    st.session_state.database_path = result.database_path
+                    st.session_state.tables = list(result.tables.keys())
+                    st.session_state.dataset_name = result.dataset_name
 
-                    st.session_state.ddl = result["ddl"]
-                    st.session_state.profiles = result["profiles"]
+                    st.session_state.ddl = result.ddl
+                    st.session_state.profiles = result.profiles
 
                     st.session_state.dataset_loaded = True
                     st.session_state.status = "Database Profiled ✅"
@@ -53,10 +53,10 @@ def render_sidebar():
             st.subheader("Preview")
 
             first_table = next(
-                iter(st.session_state.dataset["tables"])
+                iter(st.session_state.dataset)
             )
 
-            df = st.session_state.dataset["tables"][first_table]
+            df = st.session_state.dataset[first_table]
 
             st.dataframe(
                 df.head(),

@@ -1,8 +1,7 @@
 from pathlib import Path
 import sqlite3
 
-DATABASE_DIR = Path("database")
-DATABASE_DIR.mkdir(exist_ok=True)
+from config import DATABASE_DIR
 
 
 class SQLiteService:
