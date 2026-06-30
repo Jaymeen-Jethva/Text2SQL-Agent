@@ -4,5 +4,7 @@ database
 utils/__pycache__/*
 service/__pycache__/*
 components/__pycache__/*
-components/__pycache__/sidebar.cpython-312.pyc
-service/__pycache__/upload_service.cpython-312.pyc
+models/__pycache__/*
+pipeline/__pycache__/*
+__pycache__/*
+service/__pycache__/*
